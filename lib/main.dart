@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Praktikum 2 - Dart Basic'),
     );
   }
 }
@@ -48,27 +48,59 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  var i, j, prima;
+  int _counter = 1;
+  String _text = "Ganjil";
+  String _prima = "Prima";
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
+      if(_counter>20){
+        _counter = 1;
+      }
+
+      // percobaan 2
+      // if(_counter%2 == 0){
+      //   _text = "Genap";
+      // }else{
+      //   _text = "Ganjil";
+      // }
+
+      // percobaan 3
+      // _text = "Ganjil: ";
+      // for(int i=0;i<=_counter;i++){
+      //   if(i%2 != 0){
+      //     _text += '${i}, ';
+      //   }
+      // }
+
+      _text = "Genap ";
+      for(i = 1; i <= _counter; i++){
+        if(i % 2 == 0){
+          if(i % 3 == 0){
+            _text += '${i}, ';
+          }
+        }
+      }
+
+      _prima = "Prima : ";
+      for(i = 1; i <= _counter; i++){
+        prima = 0;
+        for(j = 2; j <= i/2; j++){
+          if(i % j == 0){
+            prima++;
+            break;
+          }
+        }
+        if(prima == 0 && i != 1)
+          _prima += '${i}, ';
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -100,6 +132,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            Text(
+              _text,
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            Text(
+              _prima,
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
