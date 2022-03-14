@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prak1/detail_screen.dart';
+import 'package:prak1/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,8 +14,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Contacts',
-      theme: ThemeData(),
-      home: const DetailScreen(),
+      theme: ThemeData(
+        fontFamily: 'Poppins'
+      ),
+      home: MainScreen(),
     );
   }
 }

@@ -1,92 +1,108 @@
 import 'package:flutter/material.dart';
+import 'package:prak1/model/tourism_place.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+  const DetailScreen({Key? key, required this.place}) : super(key: key);
+
+  final TourismPlace place;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget> [
-            Image.asset('assets/images/submarine.jpg'),
-            Container(
-              margin: const EdgeInsets.only(top: 16.0),
-              child: const Text(
-                "Surabaya Submarine Monument",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              SizedBox(
+                height: 400,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20)),
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: ClipRRect(
+                      child: place.imageAsset != ''
+                          ? Image.asset(place.imageAsset)
+                          : Image.network(place.imageNetwork),
+                    ),
+                  ),
                 ),
               ),
-            ), //Container for title
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Column(
-                    children: const <Widget>[
-                      Icon(Icons.calendar_today),
-                      Text('Open Everyday'),
-                    ],
+              Container(
+                margin: const EdgeInsets.only(top: 16.0),
+                child: Text(
+                  place.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Column(
-                    children: const <Widget>[
-                      Icon(Icons.access_time),
-                      Text('08:00 - 16:00'),
-                    ],
-                  ),
-                  Column(
-                    children: const <Widget>[
-                      Icon(Icons.attach_money),
-                      Text('Rp10.000,00'),
-                    ],
-                  ),
-                ],
+                ),
+              ), //Container for title
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Icon(Icons.calendar_today),
+                        Text(place.openDay),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Icon(Icons.access_time),
+                        Text(place.openTime),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Icon(Icons.attach_money),
+                        Text(place.ticketPrice),
+                      ],
+                    ),
+                  ],
+                ),
+              ), //new Container
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  place.desc,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ), //Container for desc
+              Container(
+                child: SizedBox(
+                  height: 166,
+                  child: listGallery(place),
+                ),
               ),
-            ), //new Container
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              child: const Text(
-                'Museum inside a decommissioned Russian war submarine with tours & an adjacent park with cafes. Clean and well maintained. Car park cost 10k, entrance fee 15k/person. You can see KRI Pasopati there, it is a russian whiskey class. You can also watch the video about Indonesian Navy at the building beside the submarine.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16.0),
-              ),
-            ), //Container for desc
-            Container(
-              height: 130,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Image.network(
-                        'https://media-cdn.tripadvisor.com/media/photo-m/1280/16/a9/33/43/liburan-di-farmhouse.jpg'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Image.asset(
-                        'assets/images/monkasel1.jpg'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Image.asset(
-                        'assets/images/monkasel2.jpg'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Image.asset(
-                        'assets/images/monkasel3.jpg'),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget listGallery(TourismPlace place) {
+    return ListView(
+      padding: const EdgeInsets.only(left: 16, bottom: 16),
+      scrollDirection: Axis.horizontal,
+      children: place.gallery
+          .map(
+            (item) => Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(item),
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }
