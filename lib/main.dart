@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prak1/detail_screen.dart';
 import 'package:prak1/main_screen.dart';
+import 'package:prak1/provider/done_tourism_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,12 +13,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Contacts',
-      theme: ThemeData(
-        fontFamily: 'Poppins'
+    return ChangeNotifierProvider(
+      create: (context) => DoneTourismProvider(),
+      child: MaterialApp(
+        title: 'Contacts',
+        theme: ThemeData(fontFamily: 'Poppins'),
+        home: MainScreen(),
       ),
-      home: MainScreen(),
     );
   }
 }
